@@ -1,0 +1,74 @@
+<style>
+  .btn-search{
+    background-color: #c4274b !important;
+    border: none !important;
+    border-radius: 25px !important;
+    color: #ffffff !important;
+    padding:0 1rem 0 1rem ;
+
+  }
+  .btn-search:hover{
+    transform: scale(1.05);
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.15);
+  }
+  .btn-search i {
+    margin-right: 5px;
+    display: inline;
+
+  }
+
+
+</style>
+<nav class="navbar navbar-edit navbar-expand-md  border-bottom sticky-top" >
+
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/listings" style="color: azure;"><i class="fa-regular fa-compass"></i> RestX</a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" style="color: azure;" href="/listings">Explore</a>
+     </div>
+    
+     <div class="navbar-nav ms-auto justify-content-center">
+  <form class="d-flex" role="search" action="/listings">
+    <input 
+      class="form-control me-2 search-input"
+      name="q" 
+      id="search-input"
+      type="search" 
+      placeholder="Search Places" 
+      aria-label="Search" 
+    />
+    <button class="btn btn-search" type="submit">
+      <i class="fa-solid fa-magnifying-glass"></i>Search
+    </button>
+  </form>
+</div>
+
+    
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" style="color: azure;" href="/listings/new">RestX your home</a>
+        <% if(!currUser){ %>
+        <a class="nav-link" style="color: azure;" href="/signup"><b>Sign Up</b></a>
+        <a class="nav-link" style="color: azure;" href="/login"><b>Sign In</b></a>
+        <% }if(currUser){ %>
+        <a class="nav-link" style="color: azure;" href="/logout"><b>Sign Out</b></a>
+        <% } %>
+
+      </div>
+    </div>
+  </div>
+</nav>
+<script>
+  window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) { // Change this value to adjust when the color changes
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
+</script>

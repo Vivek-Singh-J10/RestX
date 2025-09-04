@@ -1,0 +1,138 @@
+<% layout("layouts/boilerplate") %>
+
+
+ <div class="container">
+    <!-- Categories -->
+     <div class="category-scroll-container">
+     <div id="filters">
+    <div class="filter" data-category="Trending">
+  <div><i class="fa-solid fa-fire-flame-curved"></i></div>
+  <p style="margin-left:4px;"><i>Trending</i></p>
+</div>
+<div class="filter" data-category="Room">
+  <div><i class="fa-solid fa-cart-flatbed-suitcase"></i></div>
+  <p><i>Room</i></p>
+</div>
+<div class="filter" data-category="Urban Voyage">
+  <div><i class="fa-solid fa-mountain-city"></i></div>
+  <p><i>Urban Voyage</i></p>
+</div>
+<div class="filter" data-category="Mountains">
+  <div><i class="fa-solid fa-mountain-sun"></i></div>
+  <p><i>Mountains</i></p>
+</div>
+<div class="filter" data-category="Castles">
+  <div><i class="fa-brands fa-fort-awesome"></i></div>
+  <p><i>Castles</i></p>
+</div>
+<div class="filter" data-category="Plunges">
+  <div><i class="fa-solid fa-water"></i></div>
+  <p><i>Plunges</i></p>
+</div>
+<div class="filter" data-category="Arctic">
+  <div><i class="fa-solid fa-snowflake"></i></div>
+  <p><i>Arctic</i></p>
+</div>
+<div class="filter" data-category="Beaches">
+  <div><i class="fa-solid fa-umbrella-beach"></i></div>
+  <p><i>Beaches</i></p>
+</div>
+<div class="filter" data-category="Farms">
+  <div><i class="fa-solid fa-cow"></i></div>
+  <p><i>Farms</i></p>
+</div>
+<div class="filter" data-category="Camps">
+  <div><i class="fa-solid fa-tent"></i></div>
+  <p><i>Camps</i></p>
+</div>
+  <div class="tax-toggle m-auto mb-3">
+ <div class="form-check form-switch form-check-reverse">
+   <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+   <label class="form-check-label" for="switchCheckDefault">Display taxes</label>
+ </div>
+</div>
+
+  </div>
+  </div>
+
+  </div>
+  
+  <hr>
+  <br>
+  <div id="no-listings-message" style="display: none; text-align: center; font-size: 1.2rem; color:#BB2649; width: 100%;">
+        No listings found in this category.
+    </div>
+ 
+
+  <!-- Listings -->
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-4" id="listing-container">
+    <% for (let listing of allListings) { %>
+      <div class="col listing-card" data-category="<%= listing.category %>">
+        <a href="/listings/<%= listing._id %>" class="listing-link">
+          <div class="card h-100">
+            <img src="<%= listing.image.url %>" 
+                 class="card-img-top" 
+                 alt="listing image" 
+                 style="height: 20rem;">
+            <div class="card-img-overlay"></div>
+                      <p class="card-text">
+    <b><%= listing.title %></b><br>
+    &#x20B9; <span class="listing-price">
+        <%= listing.price != null && typeof listing.price === 'number'
+            ? listing.price.toLocaleString("en-IN")
+            : 'N/A' %>
+    </span>/night
+    <i class="tax-info" style="display: none;">&nbsp;&nbsp;+18% GST</i>
+</p>
+          </div>
+        </a>
+      </div>
+    <% } %>
+  </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const taxSwitch = document.getElementById('switchCheckDefault');
+        const allListingCards = document.querySelectorAll('.listing-card');
+
+        // Store original prices to easily switch back
+        const originalPrices = new Map();
+        allListingCards.forEach(card => {
+            const priceElement = card.querySelector('.listing-price');
+            if (priceElement) {
+                const originalPrice = parseFloat(priceElement.textContent.replace(/[^0-9.]/g, ''));
+                if (!isNaN(originalPrice)) {
+                    originalPrices.set(card, originalPrice);
+                }
+            }
+        });
+
+        taxSwitch.addEventListener("change", () => {
+            const isTaxChecked = taxSwitch.checked;
+
+            allListingCards.forEach(card => {
+                const priceElement = card.querySelector('.listing-price');
+                const taxInfoElement = card.querySelector('.tax-info');
+                const originalPrice = originalPrices.get(card);
+
+                if (originalPrice !== undefined) {
+                    if (isTaxChecked) {
+                        const finalPrice = originalPrice * 1.18;
+                        priceElement.textContent = finalPrice.toLocaleString("en-IN", {
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 2
+                        });
+                        if (taxInfoElement) {
+                            taxInfoElement.style.display = "inline";
+                        }
+                    } else {
+                        priceElement.textContent = originalPrice.toLocaleString("en-IN");
+                        if (taxInfoElement) {
+                            taxInfoElement.style.display = "none";
+                        }
+                    }
+                }
+            });
+        });
+    });
+</script>

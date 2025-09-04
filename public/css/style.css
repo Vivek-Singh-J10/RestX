@@ -1,0 +1,196 @@
+/* In your /css/style.css */
+
+/* Main content padding for navbar overlap */
+.main-content-padding {
+    padding-top: 100px; /* Adjust this value as needed based on your navbar's expanded height */
+}
+
+body{
+    font-family: "Plus Jakarta Sans", sans-serif !important ;
+}
+
+
+
+.nav-link {
+    font-weight: 420 !important;
+    border-radius: 10px !important;
+    transition: all 0.2s ease-in-out !important;
+}
+.nav-link:hover {
+    box-shadow: 0 0 10px #ffffff;
+    color: #ffffff !important; 
+}
+.navbar-edit {
+    background-color: #BB2649 !important;
+    color: white !important;
+
+}
+/* Footer styles (assuming these work as intended) */
+.f-info {
+    height: 8rem;
+    background: rgb(200, 200, 200);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: space-evenly; /* Note: should be align-content for wrap */
+    text-align: center;
+    justify-content: center;
+}
+.f-info-links a{
+    text-decoration: none;
+    color: #222222;
+}
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+.f-info-links,
+.f-info-socials,
+.f-info-brands
+{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.f-info-socials i{
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+
+/* Cards - Remove conflicting sizing rules */
+.card{
+    border:none !important;
+    margin-bottom: 2rem ;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+   
+}
+.card:hover{
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top{
+    width: 100% !important;
+    object-fit: cover !important;
+    height:20rem !important;
+    border-radius: 1rem !important;
+}
+.card-body{
+    padding: 0 !important ;
+}
+.card-text p{
+    font-weight: 500 !important;
+}
+.listing-link{
+    text-decoration: none;
+    color: #222222;
+}
+.listing-link:hover{
+    text-decoration: underline;
+    color: #111;
+}
+
+/* Card effect */
+.card-img-overlay{
+    opacity: 0;
+}
+.card-img-overlay:hover{
+    opacity:0.3;
+    background-color: white;
+}
+
+/* forms */
+.form-control{
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+.form-control:hover{
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+.edit-btn{
+    transition: transform 0.2s ease, box-shadow 0.1s ease !important;
+    background-color:#BB2649 !important;
+    border: none !important;
+    border-radius: 7px !important;
+    color: #ffffff !important;
+}
+.btn:hover{
+    transform: scale(1.05);
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* show page */
+.show-img{
+    height: 30vh;
+}
+.show-card{
+    padding-left: 0;
+    padding-right: 0;
+}
+/* Set the size of the div element that contains the map */
+#map {
+    height: 400px; /* The height is 400 pixels */
+    width: 100%; /* The width is the width of the web page */
+}
+
+#filters {
+    display: flex;
+    gap: 2rem;
+}
+
+.filter {
+  text-align: center;
+  margin-left: 1rem;   
+  cursor: pointer;
+  transition: all 0.3s ease-in-out !important;
+}
+.filter:hover{
+  transform: scale(1.1);
+  color: #ce2d53;
+
+}
+.filter p {
+  font-size:0.8rem;
+}
+.filter.active {
+    transform: scale(1.1);
+  color: #ce2d53;
+  font-weight: 600 !important;
+}
+@media (max-width: 1200px) {
+    .category-scroll-container {
+        overflow-x: auto; /* Enables horizontal scrolling */
+        padding-bottom: 10px; /* Adds space for the scrollbar */
+        -webkit-overflow-scrolling: touch; /* Improves scrolling on iOS */
+        scrollbar-width: thin; /* For Firefox */
+        scrollbar-color: #ce2d53 #f1f1f1; /* For Firefox */ 
+       
+    }
+
+ 
+} 
+.tax-info {
+    display: none;
+}
+.tax-toggle {
+    /* Existing styles for the toggle */
+    border: 1px solid #BB2649;
+    border-radius: 6px;
+    padding: 0.5rem ;
+    width: fit-content;
+}
+.tax-toggle:hover{
+    cursor: pointer;
+}
+#switchCheckDefault{
+    background-color: #ce2d53;
+    border: 1px solid #ffffff;
+    color: white;
+}
+.paycard{
+    padding: 1rem !important ;
+    transition: none !important;
+    transform: none !important;
+      box-shadow: 8px 8px 8px 4px rgba(0, 0, 0, 0.15) !important;
+
+}
