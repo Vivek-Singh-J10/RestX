@@ -12,22 +12,30 @@
        alt="listing_image">
 
   <div class="card-body">
-    <p class="card-text">Owned by <i><%= listing.owner.username %></i></p>
+    <p class="card-text">
+      Owned by 
+      <% if (listing.owner && listing.owner.username) { %>
+        <i><%= listing.owner.username %></i>
+      <% } else { %>
+        <i>Unknown</i>
+      <% } %>
+    </p>
     <p class="card-text"><%= listing.description %></p>
     <p class="card-text"><%= listing.location %></p>
     <p class="card-text"><%= listing.country %></p>
   </div>
 </div>
+
 <div class="card col-6 offset-3 paycard" style="width:10rem; padding: 1rem;">
-    <div class="card-body" >
+  <div class="card-body">
     <p class="card-text"><b>&#x20B9;<%= listing.price.toLocaleString("en-IN") %></b> for&nbsp;1&nbsp;&nbsp;night</p>
     <form action="/listings/<%= listing._id %>/checkout" method="POST">
-        <button type="submit" class="btn edit-btn">Reserve</button>
+      <button type="submit" class="btn edit-btn">Reserve</button>
     </form>
-</div>
+  </div>
 </div>
 
-<% if(currUser && listing.owner._id.equals(currUser._id)) {%>
+<% if(currUser && listing.owner && listing.owner._id && listing.owner._id.equals(currUser._id)) {%>
 <div class="row mt-3">
   <div class="col-6 offset-3 d-flex gap-3 justify-content-center">
     <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark edit-btn">Edit</a>
@@ -37,6 +45,7 @@
   </div>
 </div>
 <% } %>
+
 <% if(currUser) {%>
 <hr/>
 <div class="row mt-3">
@@ -70,50 +79,54 @@
   </div>
 </div>
 <% } %>
-<% if (listing.reviews.length > 0) { %>
+
+<% if (listing.reviews && listing.reviews.length > 0) { %>
 <div class="row">
-    <div class="col-6 offset-3">
-        <p><b>All Reviews</b></p>
-        
-        <% for (let review of listing.reviews) { %>
-            <div class="row row-cols-lg-2 row-cols-md-2 row-cols-1 g-3">
-                <div class="card col ms-3 mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title mt-3 ">@<% if (review.author) { %><%= review.author.username %><% } else { %>Anonymous<% } %></h5>
-                      <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
-                       <p class="card-text mb-3"><%= review.comment %></p>
-                      </div>
-                    </div>
-                    <form class="mb-3 ms-3" method="POST" action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE">
-                        <button class="btn btn-sm btn-dark">Delete</button>
-                    </form>
-                </div>
-            </div>
-        <% } %>
-    </div>
-</div>
-<% } %>
-    </div>
+  <div class="col-6 offset-3">
+    <p><b>All Reviews</b></p>
     
-</div>
-        <div class="col-8 offset-3 mb-3 mt-3">
-      <h3>Where you can find it!</h3>
-<div id="map"></div>
-
-<script>
-  let map;
-
-  // The initMap() function will be called by the API loader
-  function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: 28.61, lng: 77.21 },
-      zoom: 8,
-    });
-  }
-  </script>
-
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%=process.env.GOOGLE_MAPS_API_KEY%>&callback=initMap"></script>
+    <% for (let review of listing.reviews) { %>
+    <div class="card col ms-3 mb-3">
+      <div class="card-body">
+        <h5 class="card-title mt-3">
+          @<% if (review.author && review.author.username) { %>
+            <%= review.author.username %>
+          <% } else { %>
+            Anonymous
+          <% } %>
+        </h5>
+        <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
+        <p class="card-text mb-3"><%= review.comment %></p>
+        
+        <% if (currUser && review.author && review.author._id && review.author._id.equals(currUser._id)) { %>
+        <form method="POST" action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE">
+          <button class="btn btn-sm btn-dark">Delete</button>
+        </form>
+        <% } %>
+      </div>
+    </div>
+    <% } %>
   </div>
 </div>
+<% } %>
 
+<div class="row">
+  <div class="col-8 offset-3 mb-3 mt-3">
+    <h3>Where you can find it!</h3>
+    <div id="map"></div>
 
+    <script>
+      let map;
+
+      // The initMap() function will be called by the API loader
+      function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 28.61, lng: 77.21 },
+          zoom: 8,
+        });
+      }
+    </script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%=process.env.GOOGLE_MAPS_API_KEY%>&callback=initMap"></script>
+  </div>
+</div>
